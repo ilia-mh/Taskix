@@ -1,6 +1,8 @@
 import React, { useState, useContext } from 'react';
 import './App.css';
 
+import { DragDropContext, DropResult } from 'react-beautiful-dnd'
+
 import InputField from './components/InputField';
 import TodoList from './components/TodoList';
 
@@ -22,15 +24,23 @@ const App: React.FC = () => {
 
   }
 
+  const dropDownDragEnd = (result: DropResult) => {
+    // Logic for changing the droppable places and switching to done if in drops to Done tasks
+  }
+
   return (
-    <div className="App">
-      <span className="heading">Taskix</span>
+    <DragDropContext onDragEnd={dropDownDragEnd}>
 
-      <InputField todo={newTodo} setTodo={setNewTodo} addTodo={handleAddTodo} />
+      <div className="App">
+        <span className="heading">Taskix</span>
 
-      <TodoList />
+        <InputField todo={newTodo} setTodo={setNewTodo} addTodo={handleAddTodo} />
 
-    </div>
+        <TodoList />
+
+      </div>
+
+    </DragDropContext>
   );
 }
 
