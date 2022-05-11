@@ -3,7 +3,6 @@ import SingleTodo from './singleTodo';
 
 import { Store } from "../store/Store";
 
-
 const TodoList: React.FC = () => {
 
   const { todos } = useContext(Store)

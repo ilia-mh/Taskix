@@ -25,6 +25,7 @@ export const TodoReducer = (state: Todo[], action: Actions): Todo[] => {
     return newState;
 
   } else if (type === "REMOVE_TODO") {
+    
     const { payload: isdfdd } = action;
 
     const newTodos = state.filter((oldTodo) => oldTodo.id !== isdfdd);
@@ -32,6 +33,7 @@ export const TodoReducer = (state: Todo[], action: Actions): Todo[] => {
     return newTodos;
 
   } else if (type === "EDIT_TODO") {
+
     const { id, newTodo } = action.payload;
 
     if( !newTodo.length ) return state

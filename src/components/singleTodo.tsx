@@ -24,14 +24,7 @@ const SingleTodo: React.FC<Props> = ({ todo }) => {
 
     if( !edittedTodo.length ) return
 
-    console.log(todo.id)
-    console.log(edittedTodo)
-    
     editTodo( todo.id, edittedTodo )
-    // const newTodos = todos.map((oldTodo) =>
-    //   oldTodo.id === todo.id ? { ...oldTodo, todo: edittedTodo } : oldTodo
-    // );
-    // setTodos(newTodos);
 
     toggleEditMode()
   };
@@ -47,19 +40,12 @@ const SingleTodo: React.FC<Props> = ({ todo }) => {
   };
 
   const handleDelete: () => void = () => {
-
     removeTodo(todo.id)
-    // const newTodos = todos.filter((oldTodo) => oldTodo.id !== todo.id);
-    // setTodos(newTodos);
   };
 
   const handleDone: () => void = () => {
 
     toggleIsDone(todo.id)
-    // const newTodos = todos.map((oldTodo) =>
-    //   oldTodo.id === todo.id ? { ...oldTodo, isDone: !oldTodo.isDone } : oldTodo
-    // );
-    // setTodos(newTodos);
   };
 
   useEffect( () => {
