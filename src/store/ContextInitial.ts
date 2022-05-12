@@ -7,6 +7,7 @@ export interface ContextValue {
   removeTodo: ( isDone: boolean, id: number ) => void;
   editTodo: ( isDone: boolean, id: number, newTodo: string ) => void;
   toggleIsDone: (todo: Todo) => void;
+  changeTodoPlace: ( isDone: boolean, oldIdx: number, newIdx: number ) => void
 }
 
 export const initialContextVal = {
@@ -20,4 +21,5 @@ export const initialContextVal = {
   },
   toggleIsDone: (todo: Todo) => {
   },
+  changeTodoPlace: ( isDone: boolean, oldIdx: number, newIdx: number ) => {}
 }

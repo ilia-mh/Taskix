@@ -53,6 +53,17 @@ export const DoneTodoReducer = (state: Todo[], action: Actions): Todo[] => {
 
     return newTodos;
 
+  } else if ( type === "CHANGE_TODO_PLACE" ) {
+    const { oldIdx, newIdx } = action.payload
+
+    const filteredArr = state.filter( (todo,idx) => idx !== oldIdx )
+
+    const beforeArr = filteredArr.slice(0,newIdx)
+    const afterArr = filteredArr.slice(newIdx)
+
+    const newTodos = [...beforeArr, state[oldIdx], ...afterArr]
+
+    return newTodos
   }
 
   return state;

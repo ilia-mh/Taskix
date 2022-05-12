@@ -11,6 +11,7 @@ const actions = {
   TOGGLE_ISDONE: "TOGGLE_ISDONE",
   EDIT_ACTIVE_TODO: "EDIT_ACTIVE_TODO",
   EDIT_DONE_TODO: "EDIT_DONE_TODO",
+  CHANGE_TODO_PLACE: "CHANGE_TODO_PLACE"
 };
 
 export const Store = React.createContext<ContextValue>(initialContextVal);
@@ -50,7 +51,11 @@ const AppContext: React.FC<Props> = ({ children }) => {
         DoneTodoDispatch({ type: actions.ADD_DONE_TODO, payload: note });
       }
 
-    },
+    }, 
+    changeTodoPlace: ( isDone: boolean, oldIdx: number, newIdx: number ) => {
+      if( isDone ) DoneTodoDispatch({ type: actions.CHANGE_TODO_PLACE, payload: { oldIdx, newIdx } });
+      else ActiveTodoDispatch({ type: actions.CHANGE_TODO_PLACE, payload: { oldIdx, newIdx } });
+    }
     
   };
 

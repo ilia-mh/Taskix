@@ -7,7 +7,7 @@ add new reducers and states in Store.tsx file.
 ## Project TODOS
 - [x] Seperate Completed Todos from Active Todos
 - [x] Make Todos change its active or done place if put the corresponding dropppable area
-- [ ] Make Todos draggable to move them up and down
+- [x] Make Todos draggable to move them up and down
 - [ ] Write Unit Tests for TodosContext
 - [ ] Add Cypress and write E2E tests for the todos
 

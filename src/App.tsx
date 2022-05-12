@@ -10,7 +10,7 @@ import { Store } from "./store/Store";
 
 const App: React.FC = () => {
 
-  const { activeTodos, doneTodos, addTodo, toggleIsDone } = useContext(Store);
+  const { activeTodos, doneTodos, addTodo, toggleIsDone, changeTodoPlace } = useContext(Store);
 
   const [newTodo, setNewTodo] = useState("");
 
@@ -25,7 +25,7 @@ const App: React.FC = () => {
   const dropDownDragEnd = (result: DropResult) => {
     // Logic for changing the droppable places and switching to done if in drops to Done tasks
 
-    const { source, destination, draggableId } = result;
+    const { source, destination } = result;
 
     if (!destination) return;
     if (
@@ -34,24 +34,23 @@ const App: React.FC = () => {
     )
       return;
       
-    let add,
-      active = activeTodos,
+    let active = activeTodos,
       complete = doneTodos
 
     if( source.droppableId === 'ActiveTasks' ) {
 
-      add = active[source.index]
-
       if( destination.droppableId === 'DoneTasks') {
         toggleIsDone(active[source.index])
-      }
+        changeTodoPlace(true, complete.length, destination.index)
+      } else changeTodoPlace(false, source.index, destination.index)
+    
     } else {
-
-      add = complete[source.index]
 
       if( destination.droppableId === 'ActiveTasks') {
         toggleIsDone(complete[source.index])
-      }
+        changeTodoPlace(false, active.length, destination.index)
+      } else changeTodoPlace(true, source.index, destination.index)
+
     }
   };
 
