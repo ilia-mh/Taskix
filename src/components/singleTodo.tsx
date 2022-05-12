@@ -24,7 +24,7 @@ const SingleTodo: React.FC<Props> = ({ todo, index }) => {
 
     if (!edittedTodo.length) return;
 
-    editTodo(todo.id, edittedTodo);
+    editTodo(todo.isDone, todo.id, edittedTodo);
 
     toggleEditMode();
   };
@@ -40,11 +40,11 @@ const SingleTodo: React.FC<Props> = ({ todo, index }) => {
   };
 
   const handleDelete: () => void = () => {
-    removeTodo(todo.id);
+    removeTodo(todo.isDone,todo.id);
   };
 
   const handleDone: () => void = () => {
-    toggleIsDone(todo.id);
+    toggleIsDone(todo);
   };
 
   useEffect(() => {

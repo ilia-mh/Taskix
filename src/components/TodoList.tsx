@@ -6,13 +6,11 @@ import { Todo } from "../model";
 import { Droppable } from "react-beautiful-dnd";
 
 const TodoList: React.FC = () => {
-  const { todos } = useContext(Store);
-
-  const getTodos: (isDone: boolean) => Todo[] = (isDone: boolean) =>
-    todos.filter((todo) => todo.isDone == isDone);
+  const { activeTodos, doneTodos } = useContext(Store);
 
   return (
     <div className="container">
+
       <Droppable droppableId="ActiveTasks">
         {(provided) => (
           <div
@@ -22,7 +20,7 @@ const TodoList: React.FC = () => {
           >
             <span className="todos__heading">Active Tasks</span>
 
-            {getTodos(false).map((todo,idx) => (
+            {activeTodos.map((todo,idx) => (
               <SingleTodo todo={todo} key={todo.id} index={idx} />
             ))}
             {
@@ -41,7 +39,7 @@ const TodoList: React.FC = () => {
           >
             <span className="todos__heading">Completed Tasks</span>
 
-            {getTodos(true).map((todo,idx) => (
+            {doneTodos.map((todo,idx) => (
               <SingleTodo todo={todo} key={todo.id} index={idx} />
             ))}
             {
@@ -50,6 +48,7 @@ const TodoList: React.FC = () => {
           </div>
         )}
       </Droppable>
+
     </div>
   );
 };

@@ -1,15 +1,17 @@
 import React, { useReducer } from "react";
 import { ContextValue, initialContextVal } from "./ContextInitial";
-import { TodoReducer } from "./TodoReducer";
-
+import { ActiveTodoReducer } from "./ActiveTodoReducer";
+import { DoneTodoReducer } from "./DoneTodoReducer";
 
 const actions = {
-  ADD_TODO: "ADD_TODO",
-  REMOVE_TODO: "REMOVE_TODO",
+  ADD_ACTIVE_TODO: "ADD_ACTIVE_TODO",
+  ADD_DONE_TODO: "ADD_DONE_TODO",
+  REMOVE_ACTIVE_TODO: "REMOVE_ACTIVE_TODO",
+  REMOVE_DONE_TODO: "REMOVE_DONE_TODO",
   TOGGLE_ISDONE: "TOGGLE_ISDONE",
-  EDIT_TODO: "EDIT_TODO",
+  EDIT_ACTIVE_TODO: "EDIT_ACTIVE_TODO",
+  EDIT_DONE_TODO: "EDIT_DONE_TODO",
 };
-
 
 export const Store = React.createContext<ContextValue>(initialContextVal);
 
@@ -18,22 +20,38 @@ interface Props {
 }
 
 const AppContext: React.FC<Props> = ({ children }) => {
-  const [TodoState, TodoDispatch] = useReducer(TodoReducer, []);
+  const [ActiveTodos, ActiveTodoDispatch] = useReducer(ActiveTodoReducer, []);
+  const [DoneTodos, DoneTodoDispatch] = useReducer(DoneTodoReducer, []);
 
   const value: ContextValue = {
-    todos: TodoState,
-    addTodo: (newTodo) => {
-      TodoDispatch({ type: actions.ADD_TODO, payload: newTodo });
+    activeTodos: ActiveTodos,
+    doneTodos: DoneTodos,
+    addTodo: ( isDone, newTodo) => {
+      if( isDone ) DoneTodoDispatch({ type: actions.ADD_DONE_TODO, payload: newTodo });
+      else ActiveTodoDispatch({ type: actions.ADD_ACTIVE_TODO, payload: newTodo });
     },
-    removeTodo: (id) => {
-      TodoDispatch({ type: actions.REMOVE_TODO, payload: id });
+    removeTodo: (isDone, id) => {
+      if( isDone ) DoneTodoDispatch({ type: actions.REMOVE_DONE_TODO, payload: id });
+      else ActiveTodoDispatch({ type: actions.REMOVE_ACTIVE_TODO, payload: id });
     },
-    toggleIsDone: (id) => {
-      TodoDispatch({ type: actions.TOGGLE_ISDONE, payload: id });
+    editTodo: (isDone, id, newTodo) => {
+      if( isDone ) DoneTodoDispatch({ type: actions.EDIT_DONE_TODO, payload: { id, newTodo } });
+      else ActiveTodoDispatch({ type: actions.EDIT_ACTIVE_TODO, payload: { id, newTodo } });
     },
-    editTodo: (id, newTodo) => {
-      TodoDispatch({ type: actions.EDIT_TODO, payload: { id, newTodo } });
+    toggleIsDone: (todo) => {
+
+      const { id, todo: note, isDone } = todo
+
+      if( isDone ) {
+        DoneTodoDispatch({ type: actions.REMOVE_DONE_TODO, payload: id });
+        ActiveTodoDispatch({ type: actions.ADD_ACTIVE_TODO, payload: note });
+      } else {
+        ActiveTodoDispatch({ type: actions.REMOVE_ACTIVE_TODO, payload: id });
+        DoneTodoDispatch({ type: actions.ADD_DONE_TODO, payload: note });
+      }
+
     },
+    
   };
 
   return <Store.Provider value={value}>{children}</Store.Provider>;

@@ -1,21 +1,23 @@
 import { Todo } from "../model";
 
 export interface ContextValue {
-  todos: Todo[];
-  addTodo: (newTodo: string) => void;
-  removeTodo: (id: number) => void;
-  toggleIsDone: (id: number) => void;
-  editTodo: (id: number, newTodo: string) => void;
+  activeTodos: Todo[];
+  doneTodos: Todo[];
+  addTodo: ( isDone: boolean, newTodo: string ) => void;
+  removeTodo: ( isDone: boolean, id: number ) => void;
+  editTodo: ( isDone: boolean, id: number, newTodo: string ) => void;
+  toggleIsDone: (todo: Todo) => void;
 }
 
 export const initialContextVal = {
-  todos: [],
-  addTodo: (newTodo: string) => {
+  activeTodos: [],
+  doneTodos: [],
+  addTodo: ( isDone: boolean, newTodo: string ) => {
   },
-  removeTodo: (id: number) => {
+  removeTodo: ( isDone: boolean, id: number ) => {
   },
-  toggleIsDone: (id: number) => {
+  editTodo: ( isDone: boolean, id: number, newTodo: string) => {
   },
-  editTodo: (id: number, newTodo: string) => {
+  toggleIsDone: (todo: Todo) => {
   },
 }
